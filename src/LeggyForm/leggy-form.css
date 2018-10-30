@@ -1,0 +1,61 @@
+:root {
+  --leg-width: 400px;
+  --border-color: #ccc;
+}
+
+.leggy-form {
+  box-sizing: border-box;
+  width: var(--leg-width);
+  border-color:#ccc;
+  border-width: 1px;
+  border-style: solid solid none solid;
+  padding-right: 24px;
+  position: relative;
+}
+
+
+.field-row {
+  height: 24px;
+  line-height: 24px;
+  border-bottom: solid 1px var(--border-color);
+  display: flex;
+  align-items: stretch;
+}
+
+.field-label {
+  flex: 0 0 90px;
+  text-align: right;
+  padding-right: 6px;
+  box-sizing: border-box;
+}
+
+.field {
+  flex: 1 1 auto;
+  padding: 2px;
+  border-left: solid 1px var(--border-color);
+}
+
+.field .control {
+  background-color: rgba(0,0,0,.05);
+  height: 100%;
+}
+
+.field .empty {
+  background-color: transparent;
+  height: 100%;
+}
+
+.add-leg-bar {
+  position: absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  width: 24px;
+  box-sizing: border-box;
+  border-color:#ccc;
+  border-width: 1px;
+  border-style: none none solid solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
