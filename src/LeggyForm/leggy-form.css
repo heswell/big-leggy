@@ -35,6 +35,10 @@
   border-left: solid 1px var(--border-color);
 }
 
+.empty-row .field {
+  border-left: none;
+}
+
 .field .control {
   background-color: rgba(0,0,0,.05);
   height: 100%;

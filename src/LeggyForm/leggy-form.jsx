@@ -2,7 +2,19 @@ import React from 'react';
 import cx from 'classnames';
 import './leggy-form.css';
 
+const KEY_LEFT = 37;
+const KEY_RIGHT = 39;
+
 export class LeggyForm extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      rowIdx: 0,
+      cellIdx: 0
+    }
+
+  }
   render(){
 
     const fieldList = this.buildFieldList(this.props.model);
@@ -19,29 +31,65 @@ export class LeggyForm extends React.Component {
   buildRows(fieldList){
     return fieldList.map((row,idx) => {
       const className = cx('field-row', {
-        'head-row': idx === 0
+        'head-row': idx === 0,
+        'empty-row': row.isEmpty
       })
       return (
         <div className={className} key={idx}>
-          <div className="field-label">{row.label}</div>
+          {!row.isEmpty && 
+           <div className="field-label">{row.label}</div>
+          }
           {row.fields.map((field, idx) => 
-            <div className="field" key={idx}>
+            <div className="field" key={idx} onKeyDown={e => this.handleKeyDown(e.keyCode)}>
               {field.type === 'empty' ? (
                 <div className="empty" />
               ) : (
-                <div className="control" />
+                <div className="control" tabIndex={field.tabIdx} />
               )}
             </div>
           )}
-      
-        
         </div>
       )
     })
 
   }
 
-  buildFieldList({fields, legs}){
+  handleKeyDown(keyCode){
+    if (keyCode === KEY_RIGHT){
+
+    } else if (keyCode === KEY_LEFT){
+
+    }
+  }
+
+  buildFieldList({fields, layout: {groups}}){
+
+    const results = [];
+    let tabIdx = 1;
+
+    groups.forEach((group,idx) => {
+      if (idx !== 0){
+        results.push({
+          label: false, isEmpty: true, fields: [{type:'empty'}]
+        })
+      }
+      group.rows.forEach(fields => {
+        const row = {
+          label: fields[0].label, 
+          fields: fields.map((field, idx) => ({
+            ...field,
+            tabIdx: tabIdx + idx
+          }))}
+        results.push(row);
+        tabIdx += fields.length;
+      })
+    })
+    
+    return results;
+
+  }
+
+  __buildFieldList({fields, legs}){
     const fieldMap = fields.reduce((map, field, idx) => {
       map[field.id] = {
         ...field,
